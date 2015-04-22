@@ -3,6 +3,7 @@
 namespace Acme\ImageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Image
@@ -15,16 +16,25 @@ class Image
     private $id;
 
     /**
+     * @Assert\NotNull()
      * @var string
      */
     private $name;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 100,
+     *      minMessage = "Description must be at least {{ limit }} characters long",
+     *      maxMessage = "Description cannot be longer than {{ limit }} characters"
+     * )
      * @var string
      */
     private $description;
 
     /**
+     * @Assert\Url()
      * @var string
      */
     private $imageUrl;
