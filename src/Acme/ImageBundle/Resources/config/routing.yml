@@ -1,3 +1,3 @@
 homepage:
     path:      /
-    defaults:  { _controller: ImageBundle:Image:homepage }
+    defaults:  { _controller: ImageBundle:Homepage:show }
