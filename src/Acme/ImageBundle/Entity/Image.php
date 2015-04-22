@@ -8,7 +8,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Image
- * @UniqueEntity("name")
+ * @UniqueEntity("name", groups={"edit"})
  */
 class Image
 {
@@ -18,25 +18,26 @@ class Image
     private $id;
 
     /**
-     * @Assert\NotNull()
+     * @Assert\NotNull(groups={"edit"})
      * @var string
      */
     private $name;
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"edit"})
      * @Assert\Length(
      *      min = 5,
      *      max = 100,
      *      minMessage = "Description must be at least {{ limit }} characters long",
-     *      maxMessage = "Description cannot be longer than {{ limit }} characters"
+     *      maxMessage = "Description cannot be longer than {{ limit }} characters",
+     *      groups = {"edit"}
      * )
      * @var string
      */
     private $description;
 
     /**
-     * @Assert\Url()
+     * @Assert\Url(groups={"edit"})
      * @var string
      */
     private $imageUrl;

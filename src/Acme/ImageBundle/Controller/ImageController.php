@@ -162,6 +162,7 @@ class ImageController extends Controller
         $form = $this->createForm(new ImageType(), $entity, array(
             'action' => $this->generateUrl('image_update', array('id' => $entity->getId())),
             'method' => 'PUT',
+            'validation_groups'=>'edit',
         ));
 
         $form->add('submit', 'submit', array('label' => 'Update'));
