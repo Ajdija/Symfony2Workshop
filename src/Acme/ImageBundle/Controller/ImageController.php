@@ -73,6 +73,7 @@ class ImageController extends Controller
         $form = $this->createForm(new ImageType(), $entity, array(
             'action' => $this->generateUrl('image_create'),
             'method' => 'POST',
+            'validation_groups'=>'registration',
         ));
 
         $form->add('submit', 'submit', array('label' => 'Create'));
