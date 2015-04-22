@@ -8,7 +8,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Image
- * @UniqueEntity("name", groups={"edit"})
+ * @UniqueEntity("name", groups={"edit", "registration"})
  */
 class Image
 {
@@ -18,32 +18,33 @@ class Image
     private $id;
 
     /**
-     * @Assert\NotNull(groups={"edit"})
+     * @Assert\NotBlank(groups={"edit", "registration"})
      * @var string
      */
     private $name;
 
     /**
-     * @Assert\NotBlank(groups={"edit"})
+     * @Assert\NotBlank(groups={"edit", "registration"})
      * @Assert\Length(
      *      min = 5,
      *      max = 100,
      *      minMessage = "Description must be at least {{ limit }} characters long",
      *      maxMessage = "Description cannot be longer than {{ limit }} characters",
-     *      groups = {"edit"}
+     *      groups = {"edit", "registration"}
      * )
      * @var string
      */
     private $description;
 
     /**
-     * @Assert\Url(groups={"edit"})
+     * @Assert\NotBlank(groups={"edit", "registration"})
+     * @Assert\Url(groups={"edit", "registration"})
      * @var string
      */
     private $imageUrl;
 
     /**
-     * @Assert\True(message = "The name cannot contain 'Coder's Lab' ")
+     * @Assert\True(message = "The name cannot contain 'Coder's Lab' ", groups={"registration"})
      * @return bool
      */
     public function hasNoCodersLab(){
