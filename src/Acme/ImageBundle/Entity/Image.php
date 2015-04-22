@@ -40,6 +40,14 @@ class Image
     private $imageUrl;
 
     /**
+     * @Assert\True(message = "The name cannot contain 'Coder's Lab' ")
+     * @return bool
+     */
+    public function hasNoCodersLab(){
+        return strpos($this->name,"Coder's Lab") === false;
+    }
+
+    /**
      * Get id
      *
      * @return integer 
