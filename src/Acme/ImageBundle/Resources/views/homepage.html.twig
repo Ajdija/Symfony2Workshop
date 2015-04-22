@@ -1,0 +1,13 @@
+{% extends 'ImageBundle::layout.html.twig' %}
+
+{% block title %}Homepage - Coder's Lab workshop{% endblock %}
+
+        {% block content_header_more %}
+            <li><a href="{{ path('homepage') }}">Homepage</a></li>
+        {% endblock %}
+
+{% block content %}
+    <h1 class="title">Welcome!</h1>
+
+    <p>This is homepage route of our application defined in ImageBundle.</p>
+{% endblock %}

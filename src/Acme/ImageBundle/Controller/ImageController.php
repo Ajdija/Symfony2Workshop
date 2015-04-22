@@ -13,5 +13,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class ImageController extends Controller
 {
-
+    public function homepageAction()
+    {
+        return $this->render('ImageBundle::homepage.html.twig');
+    }
 }
