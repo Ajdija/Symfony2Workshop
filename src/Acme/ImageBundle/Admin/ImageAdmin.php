@@ -15,7 +15,10 @@ class ImageAdmin extends Admin
             ->add('id')
             ->add('name')
             ->add('description')
-            ->add('imageUrl');
+            ->add('imageUrl')
+            ->add('active', null, [
+                'required' => false
+            ]);
     }
 
     // Fields to be shown on filter forms
@@ -31,7 +34,15 @@ class ImageAdmin extends Admin
             ->add('id')
             ->add('name')
             ->add('description')
-            ->add('imageUrl');
-        ;
+            ->add('imageUrl')
+            ->add('active', null, [
+                'editable' => true
+            ])
+            ->add('_action', 'actions', [
+                'actions' => array(
+                    'edit' => array(),
+                    'delete' => [],
+                )
+            ]);
     }
 }
