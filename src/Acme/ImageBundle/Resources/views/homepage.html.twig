@@ -2,7 +2,7 @@
 {% block title %}Homepage - Coder's Lab workshop{% endblock %}
 {% block content_header_more %}
     <li><a href="{{ path('homepage') }}">Homepage</a></li>
-    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    {% if app.user and is_granted("IS_AUTHENTICATED_REMEMBERED") %}
         <li>{{ app.user.username }}</li>
         <li>
             <a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
@@ -19,3 +19,4 @@
 {% block content %}
     {{ render(controller("ImageBundle:Image:index")) }}
 {% endblock %}
+
