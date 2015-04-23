@@ -25,12 +25,14 @@
         <div class="illustration">
             <a href="{{ path('image_show', { 'id': entity.id }) }}">show</a>
 
-            <a href="{{ path('image_edit', { 'id': entity.id }) }}">edit</a>
+            {% if is_granted("ROLE_ADMIN") %}
+                <a href="{{ path('image_edit', { 'id': entity.id }) }}">edit</a>
 
-            {% if (entity.active == false) %}
+                {% if (entity.active == false) %}
                 <a href="{{ path('image_activate', { 'id': entity.id }) }}">activate</a>
-            {% else %}
-                <a href="{{ path('image_deactivate', { 'id': entity.id }) }}">deactivate</a>
+                {% else %}
+                    <a href="{{ path('image_deactivate', { 'id': entity.id }) }}">deactivate</a>
+                {% endif %}
             {% endif %}
         </div>
     </div>

@@ -163,6 +163,12 @@ class ImageController extends Controller
      */
     public function editAction($id)
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            return $this->redirect(
+                $this->generateUrl('fos_user_security_login')
+            );
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ImageBundle:Image')->find($id);
