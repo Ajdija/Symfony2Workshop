@@ -9,7 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Acme\ImageBundle\Entity\Image;
 use Acme\ImageBundle\Form\ImageType;
-use Symfony\Component\Security\Acl\Exception\Exception;
 
 /**
  * Image controller.
@@ -18,10 +17,22 @@ use Symfony\Component\Security\Acl\Exception\Exception;
  */
 class ImageController extends Controller
 {
-
+    /**
+     * @param $id
+     * @param bool $value
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws Exception
+     */
     public function switchActiveAction($id, $value = false)
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            return $this->redirect(
+                $this->generateUrl('fos_user_security_login')
+            );
+        }
+
         $em = $this->getDoctrine()->getManager();
+
         /** @var Image $entity */
         $entity = $em->getRepository('ImageBundle:Image')->find($id);
 
