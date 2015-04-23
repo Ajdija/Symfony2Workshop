@@ -1,0 +1,8 @@
+{% extends 'ImageBundle::layout.html.twig' %}
+{% block title %}Homepage - Coder's Lab workshop{% endblock %}
+{% block content_header_more %}
+    <li><a href="{{ path('homepage') }}">Homepage</a></li>
+{% endblock %}
+{% block content %}
+{{ render(controller("ImageBundle:Image:index")) }}
+{% endblock %}

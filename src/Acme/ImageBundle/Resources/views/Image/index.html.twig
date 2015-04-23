@@ -1,0 +1,45 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Image list</h1>
+
+    {{ test }}
+
+   {% for entity in entities %}
+    <div class="block">
+        <div>
+            <img src="{{ entity.imageUrl }}"/>
+        </div>
+
+        <div>
+            <p><a href=""{{ path('image_show', { 'id': entity.id }) }}"">{{ entity.name }}</a></p>
+        </div>
+        <div>
+            <p>{{ entity.description }}</p>
+        </div>
+
+        <div>
+            active: {{ entity.active  }}
+        </div>
+
+        <div class="illustration">
+            <a href="{{ path('image_show', { 'id': entity.id }) }}">show</a>
+
+            <a href="{{ path('image_edit', { 'id': entity.id }) }}">edit</a>
+            {% if (entity.active == false) %}
+                <a href="{{ path('image_activate', { 'id': entity.id }) }}">activate</a>
+            {% else %}
+                <a href="{{ path('image_deactivate', { 'id': entity.id }) }}">deactivate</a>
+            {% endif %}
+        </div>
+    </div>
+   {% endfor %}
+
+        <ul>
+        <li>
+            <a href="{{ path('image_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

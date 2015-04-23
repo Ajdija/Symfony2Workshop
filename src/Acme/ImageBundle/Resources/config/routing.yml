@@ -1,0 +1,12 @@
+homepage:
+    path:     /
+    defaults: { _controller: ImageBundle:Homepage:homepage }
+
+image_activate:
+  path: /image/{id}/activate
+  defaults: { _controller: ImageBundle:Image:switchActive, id: 1, value: true}
+
+
+image_deactivate:
+  path: /image/{id}/deactivate
+  defaults: { _controller: ImageBundle:Image:switchActive, id: 1, value: false }
