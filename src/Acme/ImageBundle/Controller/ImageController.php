@@ -44,7 +44,7 @@ class ImageController extends Controller
         $entity->setActive($value);
         $em->flush();
 
-        return $this->redirect("ImageBundle:Image:index.html.twig");
+        return $this->redirect($this->generateUrl("homepage"));
     }
     /**
      * Lists all Image entities.
