@@ -24,7 +24,9 @@ class ImageAdmin extends Admin
     // Fields to be shown on filter forms
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-//        $datagridMapper
+        $datagridMapper
+            ->add('name')
+            ->add('active');
     }
 
     // Fields to be shown on lists
