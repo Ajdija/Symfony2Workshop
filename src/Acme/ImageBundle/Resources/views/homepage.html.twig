@@ -2,7 +2,20 @@
 {% block title %}Homepage - Coder's Lab workshop{% endblock %}
 {% block content_header_more %}
     <li><a href="{{ path('homepage') }}">Homepage</a></li>
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        <li>{{ app.user.username }}</li>
+        <li>
+            <a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+        </li>
+    {% else %}
+        <li>
+            <a href="{{ path('fos_user_security_login') }}">Login</a>
+        </li>
+        <li>
+            <a href="{{ path('fos_user_registration_register') }}">Register</a>
+        </li>
+    {% endif %}
 {% endblock %}
 {% block content %}
-{{ render(controller("ImageBundle:Image:index")) }}
+    {{ render(controller("ImageBundle:Image:index")) }}
 {% endblock %}
