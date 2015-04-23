@@ -9,3 +9,4 @@ image_activate:
 image_deactivate:
   path: /image/{id}/deactivate
   defaults: { _controller: ImageBundle:Image:switchActive, id: 1, value: false }
+

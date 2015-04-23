@@ -27,7 +27,7 @@ class ImageController extends Controller
     {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
             return $this->redirect(
-                $this->generateUrl('fos_user_security_login')
+                $this->generateUrl('no_permission')
             );
         }
 
@@ -165,7 +165,7 @@ class ImageController extends Controller
     {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
             return $this->redirect(
-                $this->generateUrl('fos_user_security_login')
+                $this->generateUrl('no_permission')
             );
         }
 

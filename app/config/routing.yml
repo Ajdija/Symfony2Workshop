@@ -20,3 +20,9 @@ _sonata_admin:
     resource: .
     type: sonata_admin
     prefix: /admin
+
+no_permission:
+    path: /sorry
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:    "sorry.html.twig"
