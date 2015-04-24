@@ -2,6 +2,9 @@
 
 namespace Acme\ImageBundle\Controller;
 
+use Acme\ImageBundle\Entity\Comment;
+use Acme\ImageBundle\Form\CommentAddType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -9,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Acme\ImageBundle\Entity\Image;
 use Acme\ImageBundle\Form\ImageType;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Image controller.
@@ -18,16 +22,61 @@ use Acme\ImageBundle\Form\ImageType;
 class ImageController extends Controller
 {
     /**
+     * @param Request $request
+     * @param $imageId
+     * @return RedirectResponse|Response
+     */
+    public function addImageCommentAction(Request $request, $imageId)
+    {
+        $entity = new Comment();
+        $form = $this->createForm(new CommentAddType(), $entity, array(
+            'action' => $this->generateUrl('image_comment_add'),
+            'method' => 'POST',
+        ));
+
+        $form->add('submit', 'submit', array('label' => 'Add comment'));
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('homepage'));
+        }
+
+        return $this->render("ImageBundle:Image:commentAdd.html.twig", [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @param $imageId
+     * @return Response
+     */
+    public function showCommentsAction($imageId){
+        $em = $this->getDoctrine()->getManager();
+        /** @var Image $image */
+        $image = $em->getRepository('ImageBundle:Image')->find($imageId);
+
+        $comments = $image->getComments();
+
+        return $this->render("ImageBundle:Comment:showComments.html.twig", [
+            'comments' => $comments,
+        ]);
+    }
+    /**
      * @param $id
      * @param bool $value
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      * @throws Exception
      */
     public function switchActiveAction($id, $value = false)
     {
         if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
             return $this->redirect(
-                $this->generateUrl('fos_user_security_login')
+                $this->generateUrl('no_permission')
             );
         }
 
@@ -163,6 +212,12 @@ class ImageController extends Controller
      */
     public function editAction($id)
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            return $this->redirect(
+                $this->generateUrl('no_permission')
+            );
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ImageBundle:Image')->find($id);

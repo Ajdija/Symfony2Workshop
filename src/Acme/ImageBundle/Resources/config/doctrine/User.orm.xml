@@ -8,5 +8,9 @@
         <id name="id" type="integer" column="id">
             <generator strategy="AUTO"/>
         </id>
+        <one-to-many
+                field="comments"
+                target-entity="Comment"
+                mapped-by="user" />
     </entity>
 </doctrine-mapping>

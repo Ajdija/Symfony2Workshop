@@ -25,13 +25,25 @@
         <div class="illustration">
             <a href="{{ path('image_show', { 'id': entity.id }) }}">show</a>
 
-            <a href="{{ path('image_edit', { 'id': entity.id }) }}">edit</a>
-
-            {% if (entity.active == false) %}
-                <a href="{{ path('image_activate', { 'id': entity.id }) }}">activate</a>
+            {% if is_granted("ROLE_MODERATOR") %}
+            MODERATOR
             {% else %}
-                <a href="{{ path('image_deactivate', { 'id': entity.id }) }}">deactivate</a>
+            NOT MODERATOR
             {% endif %}
+            {% if is_granted("ROLE_ADMIN") %}
+                <a href="{{ path('image_edit', { 'id': entity.id }) }}">edit</a>
+
+                {% if (entity.active == false) %}
+                    <a href="{{ path('image_activate', { 'id': entity.id }) }}">activate</a>
+                {% else %}
+                    <a href="{{ path('image_deactivate', { 'id': entity.id }) }}">deactivate</a>
+                {% endif %}
+            {% endif %}
+
+            <div class="comments">
+                {{ render(controller("ImageBundle:Image:showComments", {'imageId': entity.id })) }}
+                {{ render(controller("ImageBundle:Image:addImageComment", {'imageId': entity.id })) }}
+            </div>
         </div>
     </div>
    {% endfor %}

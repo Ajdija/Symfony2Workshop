@@ -9,3 +9,7 @@ image_activate:
 image_deactivate:
   path: /image/{id}/deactivate
   defaults: { _controller: ImageBundle:Image:switchActive, id: 1, value: false }
+
+image_comment_add:
+  path: /image/{id}/comment/add
+  defaults: { _controller: ImageBundle:Image:addImageComment, id: 1}

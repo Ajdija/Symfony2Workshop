@@ -27,6 +27,11 @@ class Image
     private $name;
 
     /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="image")
+     */
+    private $comments;
+
+    /**
      * @Assert\Length(
      *      min = 5,
      *      max = 100,
@@ -50,7 +55,7 @@ class Image
      * @ORM\Column(name="active", options={"default":"false"})
      * @var boolean
      */
-    private $active;
+    private $active = false;
 
     /**
      * @Assert\True(message="Name cannot contain 'Coder's Lab'", groups={"registration"})
@@ -58,6 +63,14 @@ class Image
      */
     public function isNameValid(){
         return strpos($this->name, "Coder's Lab") === false;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->name;
     }
 
     /**
@@ -160,5 +173,45 @@ class Image
     public function getActive()
     {
         return $this->active;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add comments
+     *
+     * @param \Acme\ImageBundle\Entity\Comment $comments
+     * @return Image
+     */
+    public function addComment(\Acme\ImageBundle\Entity\Comment $comments)
+    {
+        $this->comments[] = $comments;
+
+        return $this;
+    }
+
+    /**
+     * Remove comments
+     *
+     * @param \Acme\ImageBundle\Entity\Comment $comments
+     */
+    public function removeComment(\Acme\ImageBundle\Entity\Comment $comments)
+    {
+        $this->comments->removeElement($comments);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }

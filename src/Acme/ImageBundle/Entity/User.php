@@ -17,8 +17,56 @@ class User extends BaseUser
      */
     protected $id;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="user")
+     */
+    private $comments;
+
     public function __construct()
     {
         parent::__construct();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Add comments
+     *
+     * @param \Acme\ImageBundle\Entity\Comment $comments
+     * @return User
+     */
+    public function addComment(\Acme\ImageBundle\Entity\Comment $comments)
+    {
+        $this->comments[] = $comments;
+
+        return $this;
+    }
+
+    /**
+     * Remove comments
+     *
+     * @param \Acme\ImageBundle\Entity\Comment $comments
+     */
+    public function removeComment(\Acme\ImageBundle\Entity\Comment $comments)
+    {
+        $this->comments->removeElement($comments);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }

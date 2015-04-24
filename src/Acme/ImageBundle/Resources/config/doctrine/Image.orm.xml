@@ -8,5 +8,9 @@
     <field name="description" type="string" column="description" length="255"/>
     <field name="imageUrl" type="string" column="imageUrl" length="255"/>
     <field name="active" type="boolean" column="active"/>
+    <one-to-many
+          field="comments"
+          target-entity="Comment"
+          mapped-by="image" />
   </entity>
 </doctrine-mapping>
