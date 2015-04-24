@@ -58,6 +58,14 @@ class Image
     private $active;
 
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->name;
+    }
+
+    /**
      * @Assert\True(message="Name cannot contain 'Coder's Lab'", groups={"registration"})
      * @return bool
      */
