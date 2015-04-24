@@ -35,6 +35,9 @@
                 {% endif %}
             {% endif %}
         </div>
+        <div id="comments">
+            {{ render(controller("ImageBundle:Comment:list", {"imageId": entity.id})) }}
+        </div>
     </div>
    {% endfor %}
 

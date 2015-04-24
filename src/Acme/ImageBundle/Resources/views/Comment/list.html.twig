@@ -1,0 +1,22 @@
+{% if comments is not empty %}
+<hr/>
+<h2>Comments</h2>
+{% for comment in comments %}
+    <div>
+        <div><a href="{{ path('comment_show', { 'id': comment.id }) }}"><h3>{{ comment.name }}</h3></a></div>
+        <div>{{ comment.content }}</div>
+        <p>{% if comment.createdAt %}{{ comment.createdAt|date('Y-m-d H:i:s') }}{% endif %}</p>
+        <p>{% if comment.modifiedAt %}{{ comment.modifiedAt|date('Y-m-d H:i:s') }}{% endif %}</p>
+        <div>
+            <ul>
+                <li>
+                    <a href="{{ path('comment_show', { 'id': comment.id }) }}">show</a>
+                </li>
+                <li>
+                    <a href="{{ path('comment_edit', { 'id': comment.id }) }}">edit</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+{% endfor %}
+{% endif %}

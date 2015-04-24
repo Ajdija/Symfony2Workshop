@@ -2,6 +2,7 @@
 
 namespace Acme\ImageBundle\Controller;
 
+use Acme\ImageBundle\Entity\Image;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -9,6 +10,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Acme\ImageBundle\Entity\Comment;
 use Acme\ImageBundle\Form\CommentType;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Comment controller.
@@ -17,6 +20,28 @@ use Acme\ImageBundle\Form\CommentType;
  */
 class CommentController extends Controller
 {
+    /**
+     * @param $imageId
+     * @return Response
+     * @throws NotFoundHttpException
+     */
+    public function listAction($imageId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var Image $entity */
+        $entity = $em->getRepository('ImageBundle:Image')->find($imageId);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Image entity.');
+        }
+
+        $comments = $entity->getComments();
+
+        return $this->render("ImageBundle:Comment:list.html.twig", [
+            'comments' => $comments,
+        ]);
+    }
 
     /**
      * Lists all Comment entities.
