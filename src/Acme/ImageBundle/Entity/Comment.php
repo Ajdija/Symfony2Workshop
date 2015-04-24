@@ -47,6 +47,18 @@ class Comment
     protected $modified_at;
 
     /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="comments")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    protected $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Image", inversedBy="comments")
+     * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
+     */
+    protected $image;
+
+    /**
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
@@ -59,6 +71,12 @@ class Comment
             $this->setCreatedAt(new \DateTime(date('Y-m-d H:i:s')));
         }
     }
+
+    /**
+     * @var \DateTime
+     */
+    private $modifiedAt;
+
 
     /**
      * Set name
@@ -130,21 +148,6 @@ class Comment
     }
 
     /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-    /**
-     * @var \DateTime
-     */
-    private $modifiedAt;
-
-
-    /**
      * Set modifiedAt
      *
      * @param \DateTime $modifiedAt
@@ -165,5 +168,61 @@ class Comment
     public function getModifiedAt()
     {
         return $this->modifiedAt;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Acme\ImageBundle\Entity\User $user
+     * @return Comment
+     */
+    public function setUser(\Acme\ImageBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Acme\ImageBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \Acme\ImageBundle\Entity\Image $image
+     * @return Comment
+     */
+    public function setImage(\Acme\ImageBundle\Entity\Image $image = null)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \Acme\ImageBundle\Entity\Image 
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }

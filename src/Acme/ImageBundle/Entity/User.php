@@ -22,9 +22,12 @@ class User extends BaseUser
      */
     protected $comments;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
-        parent::__construct();
+        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -35,5 +38,38 @@ class User extends BaseUser
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Add comments
+     *
+     * @param \Acme\ImageBundle\Entity\Comment $comments
+     * @return User
+     */
+    public function addComment(\Acme\ImageBundle\Entity\Comment $comments)
+    {
+        $this->comments[] = $comments;
+
+        return $this;
+    }
+
+    /**
+     * Remove comments
+     *
+     * @param \Acme\ImageBundle\Entity\Comment $comments
+     */
+    public function removeComment(\Acme\ImageBundle\Entity\Comment $comments)
+    {
+        $this->comments->removeElement($comments);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }
