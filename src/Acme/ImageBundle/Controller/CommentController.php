@@ -3,6 +3,7 @@
 namespace Acme\ImageBundle\Controller;
 
 use Acme\ImageBundle\Entity\Image;
+use Acme\ImageBundle\Form\ImageCommentType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -20,6 +21,37 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class CommentController extends Controller
 {
+    /**
+     * Creates Image comment.
+     * @Route("/add", name="image_comment_create")
+     */
+        public function createImageCommentAction(Request $request)
+    {
+        $entity = new Comment();
+        $entity->updatedTimestamps();
+        $entity->setUser($this->getUser());
+        $form = $this->createForm(new ImageCommentType(), $entity, array(
+            'action' => $this->generateUrl('image_comment_create'),
+            'method' => 'POST',
+        ));
+        $form->add('submit', 'submit', array('label' => 'Add comment'));
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('homepage'));
+        }
+
+        return $this->render("ImageBundle:Comment:add.html.twig", [
+            'entity' => $entity,
+            'form'   => $form->createView(),
+        ]);
+    }
+
     /**
      * @param $imageId
      * @return Response

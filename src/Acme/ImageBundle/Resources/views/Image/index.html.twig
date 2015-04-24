@@ -37,6 +37,7 @@
         </div>
         <div id="comments">
             {{ render(controller("ImageBundle:Comment:list", {"imageId": entity.id})) }}
+            {{ render(controller("ImageBundle:Comment:createImageComment")) }}
         </div>
     </div>
    {% endfor %}
